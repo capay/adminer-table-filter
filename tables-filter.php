@@ -10,9 +10,16 @@ class AdminerTablesFilter {
 	function tablesPrint($tables) {
 ?>
 
-<p class="jsonly"><input id="searchFilter" onkeyup="tablesFilter(this.value);">
+<p class="jsonly"><input id="searchFilter" onkeyup="tableFilterKeyEvent(this.value);">
 
 <script type="text/javascript">
+	var timeoutId = 0;
+	function tableFilterKeyEvent(value){
+		clearTimeout(timeoutId);
+		timeoutId = setTimeout(function(){
+			tablesFilter(value);
+		}, 500);
+	}
 	function tablesFilter(value) {
 		document.cookie = 'searchFilterValue=' + value;
 		var tables = document.getElementById('tables').getElementsByTagName('span');
@@ -30,8 +37,11 @@ class AdminerTablesFilter {
 		echo "<p id='tables' onmouseover='menuOver(this, event);' onmouseout='menuOut(this);'>\n";
 		$lang = lang('select');
 		foreach ($tables as $table => $type) {
-			echo '<span><a href="' . h(ME) . 'select=' . urlencode($table) . '"' . bold($_GET["select"] == $table) . ">" . $lang . "</a> ";
-			echo '<a href="' . h(ME) . 'table=' . urlencode($table) . '"' . bold($_GET["table"] == $table) . ">" . h($table) . "</a><br></span>\n";
+			echo '<span>';
+			echo '<a href="' . h(ME) . 'select=' . urlencode($table) . '"' . bold($_GET["select"] == $table) . ">" . $lang . "</a> ";
+			echo '<a href="' . h(ME) . 'table=' . urlencode($table) . '"' . bold($_GET["table"] == $table) . ">" . h($table) . "</a>";
+			echo '<br>';
+			echo '</span>';
 		}
 		return true;
 	}
@@ -40,10 +50,11 @@ class AdminerTablesFilter {
 
 <script>
 	window.onload = function(){
-		var searchFilterValue = document.cookie.replace(/(?:(?:^|.*;\s*)searchFilterValue\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+		var searchFilter = document.getElementById('searchFilter');
 
-		if(document.getElementById('searchFilter')){
-			document.getElementById('searchFilter').value = searchFilterValue;
+		if(searchFilter){
+			var searchFilterValue = document.cookie.replace(/(?:(?:^|.*;\s*)searchFilterValue\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+			searchFilter.value = searchFilterValue;
 			tablesFilter(searchFilterValue);
 		}
 	}
