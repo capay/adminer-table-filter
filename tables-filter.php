@@ -18,7 +18,7 @@ class AdminerTablesFilter {
 		clearTimeout(timeoutId);
 		timeoutId = setTimeout(function(){
 			tablesFilter(value);
-		}, 500);
+		}, 200);
 	}
 	function tablesFilter(value) {
 		document.cookie = 'searchFilterValue=' + value;
