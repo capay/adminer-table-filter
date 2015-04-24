@@ -16,7 +16,9 @@ class AdminerTablesFilter {
 
 	var $searchFilter = document.querySelector('#searchFilter');
 	$searchFilter.addEventListener('keydown', function(e) {
-		$searchFilter.select();
+		if (e.key == 'Escape') {
+			$searchFilter.select();
+		}
 	});
 
 	var timeoutId = 0;
