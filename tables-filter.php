@@ -13,6 +13,12 @@ class AdminerTablesFilter {
 <p class="jsonly"><input id="searchFilter" onkeyup="tableFilterKeyEvent(this.value);">
 
 <script type="text/javascript">
+
+	var $searchFilter = document.querySelector('#searchFilter');
+	$searchFilter.addEventListener('keydown', function(e) {
+		$searchFilter.select();
+	});
+
 	var timeoutId = 0;
 	function tableFilterKeyEvent(value){
 		clearTimeout(timeoutId);
@@ -20,6 +26,31 @@ class AdminerTablesFilter {
 			tablesFilter(value);
 		}, 200);
 	}
+	// function tablesFilter(value) {
+	// 	document.cookie = 'searchFilterValue=' + value;
+	// 	var tables = document.getElementById('tables');
+	// 	var menu = document.getElementById('menu');
+	// 	tables.setAttribute('style', 'display:hidden;');
+	// 	var table_spans = tables.getElementsByTagName('span');
+	// 	var result = [];
+	// 	var newMenu = document.createElement('div');
+	// 	for (var i = table_spans.length; i--; ) {
+	// 		var a = table_spans[i].children[1];
+	// 		var text = a.innerText || a.textContent;
+	// 		// table_spans[i].className = (text.indexOf(value) == -1 ? 'hidden' : '');
+// // 			table_spans[i].className = (text.match(new RegExp(value, 'i')) ? '' : 'hidden');
+// // 			a.innerHTML = text.replace(value, '<b>' + value + '</b>');
+
+	// 		if(text.match(new RegExp(value, 'i'))){
+	// 			var span = document.createElement('span');
+
+	// 			span.appendChild(table_spans[i]);
+	// 			result.push(span);
+	// 		}
+	// 	}
+	// 	newMenu.innerHTML = result.join('');
+	// 	menu.appendChild(newMenu);
+	// }
 	function tablesFilter(value) {
 		document.cookie = 'searchFilterValue=' + value;
 		var tables = document.getElementById('tables').getElementsByTagName('span');
